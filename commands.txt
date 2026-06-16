@@ -1,0 +1,18 @@
+docker network create --driver bridge student-net
+
+docker run -dit --name ubuntu1 --network student-net ubuntu
+
+docker run -dit --name ubuntu2 --network student-net ubuntu
+
+docker network inspect student-net
+
+docker exec -it ubuntu1 bash
+
+apt update
+apt install iputils-ping -y
+
+ping ubuntu2
+
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ubuntu2
+
+ping 172.18.0.3
